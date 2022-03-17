@@ -1,11 +1,16 @@
+
 spring:
     datasource:
-        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+#        type: com.alibaba.druid.pool.DruidDataSource
         druid:
-            driver-class-name: com.mysql.cj.jdbc.Driver
-            url: jdbc:mysql://192.168.134.131:3306/gulimall_admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+            # JDBC 配置
+            url: jdbc:mysql://180.76.120.236:3306/gmall_admin?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
             username: root
-            password: 123456
+            password: lyOcthr2YgGi0ytZVM26rIqUr+W/hS80skM4RoLPqrzhfC0xR30I3Nz1HVv1ZFLYNAbJB16yyIZeom+62wXpbw==
+            # 生成的公钥
+            # 配置 connection-properties，启用加密，配置公钥。
+            connection-properties: config.decrypt=true;publicKey=${spring.datasource.druid.public-key};password=${spring.datasource.druid.password}
             initial-size: 10
             max-active: 100
             min-idle: 10
@@ -24,6 +29,7 @@ spring:
                 url-pattern: /druid/*
                 #login-username: admin
                 #login-password: admin
+            # 启用ConfigFilter
             filter:
                 stat:
                     log-slow-sql: true

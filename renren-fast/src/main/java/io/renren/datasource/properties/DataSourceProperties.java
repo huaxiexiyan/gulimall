@@ -40,6 +40,16 @@ public class DataSourceProperties {
     private boolean sharePreparedStatements = false;
     private String filters = "stat,wall";
 
+    private String connectionProperties;
+
+    public String getConnectionProperties() {
+        return connectionProperties;
+    }
+
+    public void setConnectionProperties(String connectionProperties) {
+        this.connectionProperties = connectionProperties;
+    }
+
     public String getDriverClassName() {
         return driverClassName;
     }

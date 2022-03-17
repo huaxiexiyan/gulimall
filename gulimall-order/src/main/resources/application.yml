@@ -1,2 +1,63 @@
 server:
   port: 9093
+
+#spring配置
+spring:
+  application:
+    name: gmail-order
+  # 注册中心配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 180.76.120.236:8848
+        username: ENC(NS24MI5JWk+oGT4QokaRb9FlKUsyOiRT6QJoKhW4T7ULzHfalel0SUMyHSEAl8xV)
+        password: ENC(ZPTd7HDmWSv8dn9vTZ/1AVGqoQFeyhp3IablxGVe6TCmtdggxy9N77IOExuZ+95g)
+
+  #数据源配置
+  datasource:
+    # 自动执行sql
+    druid:
+      # JDBC 配置
+      url: jdbc:mysql://180.76.120.236:3306/gmall_oms?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+      username: ENC(3EIEtmn9QQ2UFvDrk2Of+6Loz9hG6oGczYXj7NzwAgNNbOTN3WdHMRQpfrHVtmgR)
+      password: lyOcthr2YgGi0ytZVM26rIqUr+W/hS80skM4RoLPqrzhfC0xR30I3Nz1HVv1ZFLYNAbJB16yyIZeom+62wXpbw==
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      # 生成的公钥
+      # 配置 connection-properties，启用加密，配置公钥。
+      connection-properties: config.decrypt=true;config.decrypt.key=${spring.datasource.druid.public-key}
+      # 启用ConfigFilter
+      filter:
+        config:
+          enabled: true
+      # 连接池配置
+      # 监控配置
+      initial-size: 1  # 初始化大小
+      min-idle: 1  # 最小
+      max-active: 10   # 最大
+      max-wait: 6000 # 配置获取连接等待超时的时间
+      time-between-eviction-runs-millis: 2000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      min-evictable-idle-time-millis: 600000 # 配置一个连接在池中最小生存的时间，单位是毫秒
+      max-evictable-idle-time-millis: 900000 # 配置一个连接在池中最大生存的时间，单位是毫秒
+
+      validation-query: select 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+
+      keep-alive: true
+      phy-max-use-count: 500
+
+      filters: stat  # 配置监控统计拦截的filters
+    embedded-database-connection: NONE
+
+# mybatis-plus 配置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+
+# 加密配置
+jasypt:
+  encryptor:
+    password: ${jasypt.encryptor.password}

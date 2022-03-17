@@ -9,6 +9,7 @@
 package io.renren.datasource.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import io.renren.config.DbPasswordCallback;
 import io.renren.datasource.properties.DataSourceProperties;
 
 import java.sql.SQLException;
@@ -42,6 +43,8 @@ public class DynamicDataSourceFactory {
         druidDataSource.setPoolPreparedStatements(properties.isPoolPreparedStatements());
         druidDataSource.setMaxOpenPreparedStatements(properties.getMaxOpenPreparedStatements());
         druidDataSource.setSharePreparedStatements(properties.isSharePreparedStatements());
+        druidDataSource.setConnectionProperties(properties.getConnectionProperties());
+        druidDataSource.setPasswordCallback(new DbPasswordCallback());
 
         try {
             druidDataSource.setFilters(properties.getFilters());
