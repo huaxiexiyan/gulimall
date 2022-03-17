@@ -1,15 +1,20 @@
-
 spring:
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-#        type: com.alibaba.druid.pool.DruidDataSource
-        druid:
-            # JDBC 配置
-            url: jdbc:mysql://180.76.120.236:3306/gmall_admin?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
-            username: root
-            password: lyOcthr2YgGi0ytZVM26rIqUr+W/hS80skM4RoLPqrzhfC0xR30I3Nz1HVv1ZFLYNAbJB16yyIZeom+62wXpbw==
-            # 生成的公钥
-            # 配置 connection-properties，启用加密，配置公钥。
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 180.76.120.236:8848
+        username: ENC(NS24MI5JWk+oGT4QokaRb9FlKUsyOiRT6QJoKhW4T7ULzHfalel0SUMyHSEAl8xV)
+        password: ENC(ZPTd7HDmWSv8dn9vTZ/1AVGqoQFeyhp3IablxGVe6TCmtdggxy9N77IOExuZ+95g)
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #        type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # JDBC 配置
+      url: jdbc:mysql://180.76.120.236:3306/gmall_admin?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=GMT%2B8
+      username: root
+      password: lyOcthr2YgGi0ytZVM26rIqUr+W/hS80skM4RoLPqrzhfC0xR30I3Nz1HVv1ZFLYNAbJB16yyIZeom+62wXpbw==
+      # 生成的公钥
+      # 配置 connection-properties，启用加密，配置公钥。
             connection-properties: config.decrypt=true;publicKey=${spring.datasource.druid.public-key};password=${spring.datasource.druid.password}
             initial-size: 10
             max-active: 100

@@ -1,0 +1,33 @@
+server:
+  port: 88
+
+#spring配置
+spring:
+  application:
+    name: gmail-gateway
+  # 注册中心配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 180.76.120.236:8848
+        username: ENC(NS24MI5JWk+oGT4QokaRb9FlKUsyOiRT6QJoKhW4T7ULzHfalel0SUMyHSEAl8xV)
+        password: ENC(ZPTd7HDmWSv8dn9vTZ/1AVGqoQFeyhp3IablxGVe6TCmtdggxy9N77IOExuZ+95g)
+    # 路由规则
+    gateway:
+      routes:
+        - id: admin_route
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+
+# 加密配置
+jasypt:
+  encryptor:
+    password: ${jasypt.encryptor.password}
+
+logging:
+  level:
+    root: debug
+    sun.net.www.protocol.http: info
