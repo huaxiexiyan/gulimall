@@ -1,7 +1,7 @@
 spring:
   spring:
     application:
-      name: gmail-gateway
+      name: gmall-gateway
   cloud:
     nacos:
       config:

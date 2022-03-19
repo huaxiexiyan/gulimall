@@ -4,7 +4,7 @@ server:
 #spring配置
 spring:
   application:
-    name: gmail-product
+    name: gmall-product
   # 注册中心配置
   cloud:
     nacos:
@@ -56,6 +56,11 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+logging:
+  level:
+    com.atguigu.gulimall: debug
 
 # 加密配置
 jasypt:

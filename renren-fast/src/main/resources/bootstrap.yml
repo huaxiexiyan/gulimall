@@ -1,7 +1,6 @@
 spring:
-  spring:
-    application:
-      name: renren-fast
+  application:
+    name: renren-fast
   cloud:
     nacos:
       config:

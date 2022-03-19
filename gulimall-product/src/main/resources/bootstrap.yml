@@ -1,7 +1,7 @@
 spring:
   spring:
     application:
-      name: gmail-product
+      name: gmall-product
   cloud:
     nacos:
       config:
