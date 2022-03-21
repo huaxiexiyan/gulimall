@@ -1,0 +1,29 @@
+server:
+  port: 9096
+
+#spring配置
+spring:
+  application:
+    name: gmall-third-party
+  # 注册中心配置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 180.76.120.236:8848
+        username: ENC(NS24MI5JWk+oGT4QokaRb9FlKUsyOiRT6QJoKhW4T7ULzHfalel0SUMyHSEAl8xV)
+        password: ENC(ZPTd7HDmWSv8dn9vTZ/1AVGqoQFeyhp3IablxGVe6TCmtdggxy9N77IOExuZ+95g)
+    alicloud:
+      access-key: ENC(pY2E1/zJ0qJmpzZd53ea9CBaX+iTMbjd7+2C6YEH9VRO1fpKkJnffMkYdkICqvaRVK3pT7VEys6pNMmvMrLUvg==)
+      secret-key: ENC(GoqjAGSpD9C3G0zA2xxUEz+gB7Ub6bogpJGn9nDkagC741Q89mMiIShPkucJbXleqBvulsNgegBKpPCBEEwmdw==)
+      oss:
+        endpoint: oss-cn-shanghai.aliyuncs.com
+        bucket: catguild-gmall
+
+logging:
+  level:
+    com.atguigu.gulimall: debug
+
+# 加密配置
+jasypt:
+  encryptor:
+    password: ${jasypt.encryptor.password}

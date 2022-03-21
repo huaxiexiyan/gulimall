@@ -4,7 +4,7 @@ server:
 #spring配置
 spring:
   application:
-    name: gmail-gateway
+    name: gmall-gateway
   # 注册中心配置
   cloud:
     nacos:
@@ -15,6 +15,18 @@ spring:
     # 路由规则
     gateway:
       routes:
+        - id: product_route
+          uri: lb://gmall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        - id: thirdparty_route
+          uri: lb://gmall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
         - id: admin_route
           uri: lb://renren-fast
           predicates:
@@ -29,5 +41,5 @@ jasypt:
 
 logging:
   level:
-    root: debug
+    root: info
     sun.net.www.protocol.http: info

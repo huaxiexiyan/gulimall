@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: gmall-third-party
+  cloud:
+    nacos:
+      config:
+        server-addr: 180.76.120.236:8848
+        namespace: 2351bfb9-ab79-44fd-9289-9da000cabcd5
+        username: ENC(NS24MI5JWk+oGT4QokaRb9FlKUsyOiRT6QJoKhW4T7ULzHfalel0SUMyHSEAl8xV)
+        password: ENC(ZPTd7HDmWSv8dn9vTZ/1AVGqoQFeyhp3IablxGVe6TCmtdggxy9N77IOExuZ+95g)
