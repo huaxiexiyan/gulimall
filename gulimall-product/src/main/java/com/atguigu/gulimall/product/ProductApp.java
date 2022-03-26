@@ -1,7 +1,6 @@
 package com.atguigu.gulimall.product;
 
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -16,7 +15,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date Created in 2022-02-06 20:39
  */
 @EnableEncryptableProperties
-@MapperScan("com.atguigu.gulimall.product.dao")
 @SpringBootApplication
 public class ProductApp {
     public static void main(String[] args) {

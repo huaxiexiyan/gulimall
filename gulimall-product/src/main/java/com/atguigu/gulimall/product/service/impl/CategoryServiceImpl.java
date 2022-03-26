@@ -51,6 +51,31 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         baseMapper.deleteBatchIds(ids);
     }
 
+    @Override
+    public Long[] findCategoryPath(Long categoryId) {
+        List<Long> categoryPathList = new ArrayList<>();
+        List<Long> parentPath = findParentPath(categoryId, categoryPathList);
+        //调换顺序
+        Collections.reverse(parentPath);
+        return parentPath.toArray(new Long[0]);
+    }
+
+    /**
+     * 递归收集父分类id
+     *
+     * @param categoryId 分类id
+     * @param categoryPath 收集器
+     * @return
+     */
+    private List<Long> findParentPath(Long categoryId,List<Long> categoryPath){
+        categoryPath.add(categoryId);
+        CategoryEntity categoryEntity = baseMapper.selectById(categoryId);
+        if (categoryEntity.getParentCid() != 0){
+            findParentPath(categoryEntity.getParentCid(),categoryPath);
+        }
+        return categoryPath;
+    }
+
     /**
      * 获取 node 节点的子集合
      *

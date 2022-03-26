@@ -4,7 +4,8 @@ import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.product.entity.AttrGroupEntity;
 import com.atguigu.gulimall.product.service.AttrGroupService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.atguigu.gulimall.product.service.CategoryService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -19,19 +20,21 @@ import java.util.Map;
  * @email xiyan@gmail.com
  * @date 2022-03-17 15:18:28
  */
+@AllArgsConstructor
 @RestController
 @RequestMapping("product/attrgroup")
 public class AttrGroupController {
-    @Autowired
-    private AttrGroupService attrGroupService;
+
+    private final AttrGroupService attrGroupService;
+    private final CategoryService categoryService;
 
     /**
-     * 列表
+     * 列表 /product/attrgroup/list/
      */
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = attrGroupService.queryPage(params);
-
+    @RequestMapping("/list/{categoryId}")
+    public R list(@RequestParam Map<String, Object> params,
+                  @PathVariable("categoryId") Long categoryId){
+        PageUtils page = attrGroupService.queryPage(params,categoryId);
         return R.ok().put("page", page);
     }
 
@@ -42,7 +45,7 @@ public class AttrGroupController {
     @RequestMapping("/info/{attrGroupId}")
     public R info(@PathVariable("attrGroupId") Long attrGroupId){
 		AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
-
+        attrGroup.setCategoryPath(categoryService.findCategoryPath(attrGroup.getCategoryId()));
         return R.ok().put("attrGroup", attrGroup);
     }
 
