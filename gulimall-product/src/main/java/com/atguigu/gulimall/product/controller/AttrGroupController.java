@@ -45,7 +45,7 @@ public class AttrGroupController {
     @RequestMapping("/info/{attrGroupId}")
     public R info(@PathVariable("attrGroupId") Long attrGroupId){
 		AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
-        attrGroup.setCategoryPath(categoryService.findCategoryPath(attrGroup.getCategoryId()));
+        attrGroup.setCatelogPath(categoryService.findCategoryPath(attrGroup.getCatelogId()));
         return R.ok().put("attrGroup", attrGroup);
     }
 

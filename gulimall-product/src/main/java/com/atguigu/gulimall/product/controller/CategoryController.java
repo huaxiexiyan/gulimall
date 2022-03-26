@@ -3,7 +3,7 @@ package com.atguigu.gulimall.product.controller;
 import com.atguigu.common.utils.R;
 import com.atguigu.gulimall.product.entity.CategoryEntity;
 import com.atguigu.gulimall.product.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +21,12 @@ import java.util.List;
  * @email xiyan@gmail.com
  * @date 2022-03-17 15:18:28
  */
+@AllArgsConstructor
 @RestController
 @RequestMapping("product/category")
 public class CategoryController {
-    @Autowired
-    private CategoryService categoryService;
+
+    private final CategoryService categoryService;
 
     /**
      * 查出所有分类及子分类，以树形结构组装起来

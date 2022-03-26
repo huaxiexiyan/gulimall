@@ -1,23 +1,30 @@
 package com.atguigu.gulimall.product.service.impl;
 
+import com.atguigu.common.tool.ObjectUtils;
 import com.atguigu.common.utils.PageUtils;
 import com.atguigu.common.utils.Query;
+import com.atguigu.gulimall.product.dao.CategoryBrandRelationDao;
 import com.atguigu.gulimall.product.dao.CategoryDao;
+import com.atguigu.gulimall.product.entity.CategoryBrandRelationEntity;
 import com.atguigu.gulimall.product.entity.CategoryEntity;
 import com.atguigu.gulimall.product.service.CategoryService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@AllArgsConstructor
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+
+    private final CategoryBrandRelationDao categoryBrandRelationDao;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -63,15 +70,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     /**
      * 递归收集父分类id
      *
-     * @param categoryId 分类id
+     * @param categoryId   分类id
      * @param categoryPath 收集器
      * @return
      */
-    private List<Long> findParentPath(Long categoryId,List<Long> categoryPath){
+    private List<Long> findParentPath(Long categoryId, List<Long> categoryPath) {
         categoryPath.add(categoryId);
         CategoryEntity categoryEntity = baseMapper.selectById(categoryId);
-        if (categoryEntity.getParentCid() != 0){
-            findParentPath(categoryEntity.getParentCid(),categoryPath);
+        if (categoryEntity.getParentCid() != 0) {
+            findParentPath(categoryEntity.getParentCid(), categoryPath);
         }
         return categoryPath;
     }
@@ -91,4 +98,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .collect(Collectors.toList());
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean updateById(CategoryEntity entity) {
+        if (ObjectUtils.isNotEmpty(entity.getName())) {
+            CategoryEntity category = baseMapper.selectById(entity.getCatId());
+            if (ObjectUtils.nullSafeNotEquals(category.getName(), entity.getName())) {
+                categoryBrandRelationDao.update(null, Wrappers.<CategoryBrandRelationEntity>lambdaUpdate()
+                        .eq(CategoryBrandRelationEntity::getCatelogId, entity.getCatId())
+                        .set(CategoryBrandRelationEntity::getCatelogName, entity.getName()));
+            }
+        }
+        return super.updateById(entity);
+    }
 }

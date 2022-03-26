@@ -32,12 +32,12 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
     public PageUtils queryPage(Map<String, Object> params, Long categoryId) {
         LambdaQueryWrapper<AttrGroupEntity> queryWrapper = Wrappers.lambdaQuery();
         if (categoryId != 0) {
-            queryWrapper.eq(AttrGroupEntity::getCategoryId, categoryId);
-            if (params.containsKey("key")) {
-                Object key = params.get("key");
-                queryWrapper.and((obj) -> obj.eq(AttrGroupEntity::getAttrGroupId, key)
-                        .or().like(AttrGroupEntity::getAttrGroupName, key));
-            }
+            queryWrapper.eq(AttrGroupEntity::getCatelogId, categoryId);
+        }
+        if (params.containsKey("key")) {
+            Object key = params.get("key");
+            queryWrapper.and((obj) -> obj.eq(AttrGroupEntity::getAttrGroupId, key)
+                    .or().like(AttrGroupEntity::getAttrGroupName, key));
         }
         IPage<AttrGroupEntity> page = baseMapper.selectPage(new Query<AttrGroupEntity>().getPage(params),
                 queryWrapper);
